@@ -17,12 +17,19 @@ FROM node:20.9.0-alpine AS runner
 
 WORKDIR /app
 
-# Copier uniquement ce qui est nécessaire au runtime
-COPY --from=builder /app/public ./public
+ENV NODE_ENV=production
+
+# Copier package.json
+COPY --from=builder /app/package.json ./
+
+# Installer les dépendances de production
+RUN npm install --production --frozen-lockfile
+
+# Copier les fichiers buildés
 COPY --from=builder /app/.next ./.next
-COPY --from=builder /app/package.json ./package.json
-COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/public ./public
+
 
 EXPOSE 3000
 
-CMD ["npm" , "run" , "dev"]
+CMD ["npm" , "start"]
