@@ -1,12 +1,12 @@
 "use client";
 import React, { useState } from "react";
 import { Mail, Lock, ArrowRight, AlertCircle, Check, User } from "lucide-react";
-import Background_Animated from "@/app/utilis/background_animated/page";
-import Floatings_particles from "@/app/utilis/floatings_particles/page";
-import Main_Left_Side from "@/app/utilis/main_left_side/page";
-import Driver from "@/app/utilis/driver/page";
+import Background_Animated from "@/app/components/background_animated/page";
+import Floatings_particles from "@/app/components/floatings_particles/page";
+import Main_Left_Side from "@/app/components/main_left_side/page";
+import Driver from "@/app/components/driver/page";
 
-export default function ModernRegisterInterface() {
+export default function RegisterPage() {
   const [password, setPassword] = useState("");
   const [isHovered, setIsHovered] = useState(false);
   const [username, setUsername] = useState("");
@@ -14,7 +14,7 @@ export default function ModernRegisterInterface() {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
 
-  const register = async (username,  password) => {
+  const register = async (username, password) => {
     const response = await fetch("http://127.0.0.1:8000/api/v1/auth/register", {
       method: "POST",
       headers: {
@@ -37,7 +37,7 @@ export default function ModernRegisterInterface() {
     if (!response.ok) {
       throw new Error(data.detail || "Erreur lors de l'inscription");
     }
-    
+
     return data;
   };
 
@@ -51,7 +51,7 @@ export default function ModernRegisterInterface() {
     try {
       const data = await register(username, password);
       setSuccess(true);
-      
+
       // Redirection vers login après 2 secondes
       setTimeout(() => {
         window.location.href = "/auth/login";
@@ -107,8 +107,12 @@ export default function ModernRegisterInterface() {
                 <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-2xl mb-4 shadow-lg shadow-blue-500/30">
                   <User className="w-8 h-8 text-white" />
                 </div>
-                <h2 className="text-3xl font-bold text-white mb-2">Créer un compte</h2>
-                <p className="text-gray-400">Rejoignez TranslateSpace aujourd'hui</p>
+                <h2 className="text-3xl font-bold text-white mb-2">
+                  Créer un compte
+                </h2>
+                <p className="text-gray-400">
+                  Rejoignez TranslateSpace aujourd'hui
+                </p>
               </div>
 
               {/* Error Message */}
@@ -123,7 +127,9 @@ export default function ModernRegisterInterface() {
               {success && (
                 <div className="mb-6 p-4 bg-green-500/10 border border-green-500/30 rounded-xl flex items-center gap-3">
                   <Check className="w-5 h-5 text-green-400 flex-shrink-0" />
-                  <p className="text-sm text-green-300">Inscription réussie! Redirection vers la connexion...</p>
+                  <p className="text-sm text-green-300">
+                    Inscription réussie! Redirection vers la connexion...
+                  </p>
                 </div>
               )}
 
@@ -133,7 +139,7 @@ export default function ModernRegisterInterface() {
                 <div className="space-y-2">
                   <label className="text-sm font-medium text-gray-400 flex items-center gap-2">
                     <User className="w-4 h-4" />
-                    Nom d'utilisateur
+                    Nom d'componentsateur
                   </label>
                   <input
                     type="text"
@@ -144,7 +150,6 @@ export default function ModernRegisterInterface() {
                     className="w-full px-4 py-3 bg-slate-900/50 border border-slate-800 rounded-xl text-white placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                   />
                 </div>
-
 
                 {/* Password Input */}
                 <div className="space-y-2">
@@ -189,7 +194,7 @@ export default function ModernRegisterInterface() {
                     className="w-4 h-4 mt-1 rounded border-slate-800 bg-slate-900 text-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed" 
                   />
                   <label htmlFor="terms" className="text-sm text-gray-400">
-                    J'accepte les <span className="text-blue-400 hover:text-blue-300 cursor-pointer">conditions d'utilisation</span> et la <span className="text-blue-400 hover:text-blue-300 cursor-pointer">politique de confidentialité</span>
+                    J'accepte les <span className="text-blue-400 hover:text-blue-300 cursor-pointer">conditions d'componentsation</span> et la <span className="text-blue-400 hover:text-blue-300 cursor-pointer">politique de confidentialité</span>
                   </label>
                 </div> */}
 
@@ -198,7 +203,7 @@ export default function ModernRegisterInterface() {
                   onClick={handleSubmit}
                   onMouseEnter={() => setIsHovered(true)}
                   onMouseLeave={() => setIsHovered(false)}
-                  disabled={loading || !username.trim() ||  !password.trim() }
+                  disabled={loading || !username.trim() || !password.trim()}
                   className="w-full py-4 px-6 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-semibold rounded-xl shadow-lg shadow-blue-500/50 hover:shadow-blue-500/70 transform hover:scale-[1.02] transition-all duration-300 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
                 >
                   {loading ? (
@@ -225,9 +230,9 @@ export default function ModernRegisterInterface() {
               {/* Login Link */}
               <div className="text-center">
                 <p className="text-gray-400 text-sm">
-                  Vous avez déjà un compte ?{' '}
-                  <button 
-                    onClick={() => window.location.href = "/auth/login"}
+                  Vous avez déjà un compte ?{" "}
+                  <button
+                    onClick={() => (window.location.href = "/auth/login")}
                     disabled={loading}
                     className="text-blue-400 hover:text-blue-300 font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                   >
@@ -242,9 +247,16 @@ export default function ModernRegisterInterface() {
 
       <style jsx>{`
         @keyframes shake {
-          0%, 100% { transform: translateX(0); }
-          25% { transform: translateX(-10px); }
-          75% { transform: translateX(10px); }
+          0%,
+          100% {
+            transform: translateX(0);
+          }
+          25% {
+            transform: translateX(-10px);
+          }
+          75% {
+            transform: translateX(10px);
+          }
         }
         .animate-shake {
           animation: shake 0.5s ease-in-out;
