@@ -1,36 +1,162 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Plateforme de Traduction Sécurisée Fullstack - Frontend
 
-## Getting Started
+Application web interne permettant d'accéder au service de traduction sécurisé TalAIt :
 
-First, run the development server:
+- Connexion / inscription (auth JWT)
+
+- Formulaire de traduction FR ↔ EN
+
+- Appels API protégés
+
+- Affichage du résultat en temps réel
+
+- Déploiement Docker complet
+
+## 🚀 Installation
+
+**1. Prérequis**
+
+- Node 20+
+
+- Backend opérationnel (http://localhost:8000
+)
+
+**2. Cloner & Installer**
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/SaidaAourras/plateforme-de-traduction-s-curis-e-frontend-.git
+cd frontend
+npm install
+cp .env.example .env.local
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## ▶️ Lancement
+**Mode développement**
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+        npm run dev
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+**Production**
 
-## Learn More
+        npm run build
+        npm start
 
-To learn more about Next.js, take a look at the following resources:
+## 🔐 Gestion du JWT
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+**Stockage**
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+``` bash
+localStorage.setItem("token", <jwt>)
+```
 
-## Deploy on Vercel
+**Injection automatique**
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+Authorization: Bearer <token>
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+**Protection des pages**
+
+- si JWT absent → /auth/login
+
+
+## 📄 Pages
+- /auth
+
+    - Formulaire inscription
+
+    - Formulaire connexion
+
+    - Sauvegarde du token
+
+    - Redirection automatique → /translate
+
+- /translate (🔒 protégée)
+
+    - Input texte
+
+    - Choix direction FR→EN / EN→FR
+
+    - Appel API POST /translate
+
+    - Gestion états :
+
+        - loading
+
+        - error (503, 401…)
+
+        - success
+
+## 🧩 Structure
+
+        src/
+        └── app/
+            ├── page.js                      # Page d'accueil
+            ├── layout.js                    # Layout global
+            ├── globals.css                  # Styles globaux
+            ├── favicon.ico
+            │
+            ├── auth/                        # Pages liées à l'auth
+            │   ├── login/page.js
+            │   ├── register/page.js
+            │   └── ... 
+            │
+            ├── components/                  # Composants UI
+            │   ├── Navbar.jsx
+            │   ├── Input.jsx
+            │   └── ... 
+            │
+            └── translation/                 # Interface traduction
+                ├── page.js
+                ├── TranslationForm.jsx
+                └── TranslationResult.jsx
+
+        lib/                                 # Fonctions partagées
+        ├── utils/
+        │   ├── utils.js
+        │   └── auth.js                      # gestion token localStorage, etc.
+
+        components/                          # Autres composants globaux
+        ├── Header.jsx
+        └── Footer.jsx
+
+        public/                              # Assets publics
+
+        dockerfile
+        eslint.config.mjs
+        next.config.mjs
+        package.json
+        README.md
+
+
+## 🧪 Tests Manuels Recommandés
+
+1. Inscription → succès
+
+2. Login → réception JWT
+
+3. Traduction FR→EN → succès
+
+4. Traduction sans token → redirect /auth
+
+5. Token expiré → redirect /auth
+
+6. Déconnexion → suppression JWT
+
+## 🐳 Docker
+
+Un Dockerfile est fourni pour un déploiement interne.
+
+Build :
+
+        docker build -t talait-frontend .
+
+Run :
+
+        docker run -p 3000:3000 talait-frontend
+
+## ✨ Author
+
+**SAIDA AOURRAS**  
+
+- 🐙 GitHub: [johndoe](https://github.com/johndoe)  
+
