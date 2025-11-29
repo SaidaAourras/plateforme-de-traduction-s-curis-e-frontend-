@@ -1,13 +1,13 @@
 "use client";
 import React, { useState } from "react";
 import { Mail, Lock, ArrowRight, AlertCircle, Check } from "lucide-react";
-import Background_Animated from "@/app/utilis/background_animated/page";
-import Floatings_particles from "@/app/utilis/floatings_particles/page";
-import Main_Left_Side from "@/app/utilis/main_left_side/page";
-import Driver from "@/app/utilis/driver/page";
-import Form_Header from "@/app/utilis/form_header/page";
+import Background_Animated from "@/app/components/background_animated/page";
+import Floatings_particles from "@/app/components/floatings_particles/page";
+import Main_Left_Side from "@/app/components/main_left_side/page";
+import Driver from "@/app/components/driver/page";
+import Form_Header from "@/app/components/form_header/page";
 
-export default function ModernLoginInterface() {
+export default function LoginPage() {
   const [password, setPassword] = useState("");
   const [isHovered, setIsHovered] = useState(false);
   const [username, setUsername] = useState("");
@@ -38,9 +38,11 @@ export default function ModernLoginInterface() {
     }
 
     if (!response.ok) {
-      throw new Error(data.detail || "Nom d'utilisateur ou mot de passe incorrect");
+      throw new Error(
+        data.detail || "Nom d'componentsateur ou mot de passe incorrect"
+      );
     }
-    
+
     return data;
   };
 
@@ -54,7 +56,7 @@ export default function ModernLoginInterface() {
       const data = await login(username, password);
       localStorage.setItem("user_token", data.access_token);
       setSuccess(true);
-      
+
       // Redirection après 1 seconde
       setTimeout(() => {
         window.location.href = "/translation";
@@ -120,7 +122,9 @@ export default function ModernLoginInterface() {
               {success && (
                 <div className="mb-6 p-4 bg-green-500/10 border border-green-500/30 rounded-xl flex items-center gap-3">
                   <Check className="w-5 h-5 text-green-400 flex-shrink-0" />
-                  <p className="text-sm text-green-300">Connexion réussie! Redirection...</p>
+                  <p className="text-sm text-green-300">
+                    Connexion réussie! Redirection...
+                  </p>
                 </div>
               )}
 
@@ -130,7 +134,7 @@ export default function ModernLoginInterface() {
                 <div className="space-y-2">
                   <label className="text-sm font-medium text-gray-400 flex items-center gap-2">
                     <Mail className="w-4 h-4" />
-                    Nom d'utilisateur
+                    Nom d'componentsateur
                   </label>
                   <input
                     type="text"
@@ -154,7 +158,7 @@ export default function ModernLoginInterface() {
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="••••••••"
                     disabled={loading}
-                    onKeyPress={(e) => e.key === 'Enter' && handleSubmit(e)}
+                    onKeyPress={(e) => e.key === "Enter" && handleSubmit(e)}
                     className="w-full px-4 py-3 bg-slate-900/50 border border-slate-800 rounded-xl text-white placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                   />
                 </div>
@@ -162,15 +166,17 @@ export default function ModernLoginInterface() {
                 {/* Remember & Forgot */}
                 <div className="flex items-center justify-between">
                   <label className="flex items-center gap-2 cursor-pointer">
-                    <input 
-                      type="checkbox" 
+                    <input
+                      type="checkbox"
                       disabled={loading}
-                      className="w-4 h-4 rounded border-slate-800 bg-slate-900 text-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed" 
+                      className="w-4 h-4 rounded border-slate-800 bg-slate-900 text-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
                     />
-                    <span className="text-sm text-gray-400">Se souvenir de moi</span>
+                    <span className="text-sm text-gray-400">
+                      Se souvenir de moi
+                    </span>
                   </label>
-                  <button 
-                    onClick={() => alert('Fonction à venir')}
+                  <button
+                    onClick={() => alert("Fonction à venir")}
                     disabled={loading}
                     className="text-sm text-blue-400 hover:text-blue-300 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                   >
@@ -208,8 +214,8 @@ export default function ModernLoginInterface() {
               <Driver></Driver>
 
               {/* Sign Up Link */}
-              <button 
-                onClick={() => window.location.href = "/auth/register"}
+              <button
+                onClick={() => (window.location.href = "/auth/register")}
                 disabled={loading}
                 className="w-full py-3 px-6 border-2 border-slate-800 hover:border-blue-500 hover:bg-blue-500/5 text-gray-300 hover:text-blue-400 font-semibold rounded-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
               >
@@ -222,9 +228,16 @@ export default function ModernLoginInterface() {
 
       <style jsx>{`
         @keyframes shake {
-          0%, 100% { transform: translateX(0); }
-          25% { transform: translateX(-10px); }
-          75% { transform: translateX(10px); }
+          0%,
+          100% {
+            transform: translateX(0);
+          }
+          25% {
+            transform: translateX(-10px);
+          }
+          75% {
+            transform: translateX(10px);
+          }
         }
         .animate-shake {
           animation: shake 0.5s ease-in-out;
