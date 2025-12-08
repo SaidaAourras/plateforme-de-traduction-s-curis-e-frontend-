@@ -21,7 +21,9 @@ export default function LoginPage() {
     body.append("username", username);
     body.append("password", password);
 
-    const response = await fetch("http://127.0.0.1:8000/api/v1/auth/login", {
+    const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
+    const response = await fetch(`${API_URL}/api/v1/auth/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
@@ -39,7 +41,7 @@ export default function LoginPage() {
 
     if (!response.ok) {
       throw new Error(
-        data.detail || "Nom d'componentsateur ou mot de passe incorrect"
+        data.detail || "Nom d'utilisateur ou mot de passe incorrect"
       );
     }
 
@@ -134,7 +136,7 @@ export default function LoginPage() {
                 <div className="space-y-2">
                   <label className="text-sm font-medium text-gray-400 flex items-center gap-2">
                     <Mail className="w-4 h-4" />
-                    Nom d'componentsateur
+                    Nom d'utilisateur
                   </label>
                   <input
                     type="text"

@@ -15,7 +15,11 @@ export default function RegisterPage() {
   const [success, setSuccess] = useState(false);
 
   const register = async (username, password) => {
-    const response = await fetch("http://127.0.0.1:8000/api/v1/auth/register", {
+    const API_URL =
+      typeof window === "undefined"
+        ? "http://backend:8000"
+        : "http://localhost:8000";
+    const response = await fetch(`${API_URL}/api/v1/auth/register`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -139,7 +143,7 @@ export default function RegisterPage() {
                 <div className="space-y-2">
                   <label className="text-sm font-medium text-gray-400 flex items-center gap-2">
                     <User className="w-4 h-4" />
-                    Nom d'componentsateur
+                    Nom d'utilisateur
                   </label>
                   <input
                     type="text"

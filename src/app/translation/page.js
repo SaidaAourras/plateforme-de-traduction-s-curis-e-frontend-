@@ -35,7 +35,12 @@ export default function TranslationPage() {
   const translation = async (sourceLang, targetLang, sourceText) => {
     const token = localStorage.getItem("user_token");
 
-    const response = await fetch("http://127.0.0.1:8000/api/v1/translate", {
+    const API_URL =
+      typeof window === "undefined"
+        ? "http://backend:8000"
+        : "http://localhost:8000";
+
+    const response = await fetch(`${API_URL}/api/v1/translate`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -87,7 +92,6 @@ export default function TranslationPage() {
   if (!isAuthenticate) {
     return null; // évite le flash de contenu
   }
-
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-950 via-gray-950 to-black relative overflow-hidden">
